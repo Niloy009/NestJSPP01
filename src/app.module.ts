@@ -3,18 +3,21 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './product/product.module';
 import { TypegooseModule } from 'nestjs-typegoose';
+import { CategoryModule } from './category/category.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
+const config = new ConfigService();
 
 @Module({
   imports: [
-    TypegooseModule.forRoot(
-      'mongodb+srv://niloy:niloy1234@nestjspractice01.1hqf0.mongodb.net/test',
-      {
-        useCreateIndex: true,
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      },
-    ),
+    ConfigModule.forRoot(),
+    TypegooseModule.forRoot(config.get('DATABASE_URL'), {
+      useCreateIndex: true,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }),
     ProductModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
