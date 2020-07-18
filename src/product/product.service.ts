@@ -21,7 +21,6 @@ export class ProductService {
     return index({
       model: this.productModel,
       paginationOptions: pagination,
-      populateOptions: { path: 'categories' },
     });
   }
 

@@ -1,7 +1,10 @@
-import { prop, ModelOptions, Ref } from '@typegoose/typegoose';
+import { prop, ModelOptions, Ref, pre } from '@typegoose/typegoose';
 import { Category } from 'src/category/category.type';
 
 @ModelOptions({ schemaOptions: { timestamps: true } })
+@pre(/^find/, function() {
+  this.populate('categories');
+})
 export class Product {
   @prop()
   public title: string;

@@ -40,7 +40,14 @@ export class CategoryService {
   }
 
   async getCategoryById(_id: string): Promise<DocumentType<Category>> {
-    return show({ model: this.categoryModel, where: { _id } });
+    return show({
+      model: this.categoryModel,
+      where: { _id },
+      populateOptions: {
+        path: 'products',
+        select: '-categories title description',
+      },
+    });
   }
   async deleteCategory(_id: string): Promise<DocumentType<Category>> {
     return destroy({ model: this.categoryModel, where: { _id } });
